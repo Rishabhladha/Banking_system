@@ -17,7 +17,8 @@ const ledgerSchema = new mongoose.Schema({
     transaction: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "transaction",
-        required: [ true, "Ledger must be associated with a transaction" ],
+        required: false,   // Optional — direct deposits have no linked transaction document
+        default: null,
         index: true,
         immutable: true
     },

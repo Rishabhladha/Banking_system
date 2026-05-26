@@ -28,6 +28,13 @@ router.get("/", authMiddleware.authMiddleware, accountController.getUserAccounts
  */
 router.get("/balance/:accountId", authMiddleware.authMiddleware, accountController.getAccountBalanceController)
 
+/**
+ * - POST /api/accounts/deposit
+ * - Deposit funds into the user's own account (external credit)
+ * - Protected Route
+ */
+router.post("/deposit", authMiddleware.authMiddleware, accountController.depositController)
+
 
 
 module.exports = router

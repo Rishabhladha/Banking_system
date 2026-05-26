@@ -5,8 +5,19 @@ const cors = require("cors")
 const app = express()
 
 // --- Core Middleware ---
+const allowedOrigins = [
+    process.env.FRONTEND_ORIGIN || "http://127.0.0.1:5500",
+    "http://localhost:5173",   // Vite React dev server
+    "http://127.0.0.1:5173",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+]
 app.use(cors({
-    origin: process.env.FRONTEND_ORIGIN || "http://127.0.0.1:5500",
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g. curl, mobile apps)
+        if (!origin || allowedOrigins.includes(origin)) return callback(null, true)
+        callback(new Error(`CORS blocked for origin: ${origin}`))
+    },
     credentials: true  // Required so cookies/JWT work cross-origin
 }))
 app.use(express.json())
