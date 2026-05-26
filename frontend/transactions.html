@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NexaBank — Transaction History</title>
+  <meta name="description" content="View your full NexaBank transaction history."/>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/transactions.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css"/>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🏦</div>
+        <span class="logo-text">NexaBank</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item"><i class="ri-layout-grid-fill"></i> Dashboard</a>
+        <a href="transfer.html" class="nav-item"><i class="ri-send-plane-fill"></i> Transfer</a>
+        <a href="transactions.html" class="nav-item active"><i class="ri-history-line"></i> Transactions</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="sidebar-user-avatar">?</div>
+          <div class="user-info">
+            <div class="user-name"  id="sidebar-user-name">Loading…</div>
+            <div class="user-email" id="sidebar-user-email"></div>
+          </div>
+          <i class="ri-logout-circle-r-line logout-btn" id="logout-btn"></i>
+        </div>
+      </div>
+    </aside>
+
+    <main class="app-main">
+      <header class="app-header">
+        <div class="page-header" style="margin:0;">
+          <div class="page-title" style="font-size:20px;margin-bottom:2px;">Transaction History</div>
+          <div class="page-subtitle">All movements on your account — most recent first</div>
+        </div>
+        <a href="transfer.html" class="btn btn-primary btn-sm">
+          <i class="ri-send-plane-fill"></i> New Transfer
+        </a>
+      </header>
+
+      <div class="app-content">
+
+        <!-- Account selector + summary -->
+        <div class="tx-controls">
+          <div class="form-group" style="flex:1;max-width:400px;">
+            <label class="form-label">Select Account</label>
+            <select class="form-input" id="account-select">
+              <option value="">Loading accounts…</option>
+            </select>
+          </div>
+          <div class="tx-summary" id="tx-summary" style="display:none;">
+            <div class="tx-summary-item">
+              <span class="tx-summary-label">Total In</span>
+              <span class="tx-summary-value text-green" id="total-in">—</span>
+            </div>
+            <div class="tx-summary-divider"></div>
+            <div class="tx-summary-item">
+              <span class="tx-summary-label">Total Out</span>
+              <span class="tx-summary-value text-red" id="total-out">—</span>
+            </div>
+            <div class="tx-summary-divider"></div>
+            <div class="tx-summary-item">
+              <span class="tx-summary-label">Count</span>
+              <span class="tx-summary-value" id="tx-count">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="tx-filter-bar" id="tx-filter-bar" style="display:none;">
+          <button class="filter-btn active" data-filter="all"    onclick="setFilter('all',this)">All</button>
+          <button class="filter-btn"        data-filter="COMPLETED" onclick="setFilter('COMPLETED',this)">Completed</button>
+          <button class="filter-btn"        data-filter="PENDING"   onclick="setFilter('PENDING',this)">Pending</button>
+          <button class="filter-btn"        data-filter="FAILED"    onclick="setFilter('FAILED',this)">Failed</button>
+        </div>
+
+        <!-- Transaction list -->
+        <div id="tx-list">
+          <div class="empty-state">
+            <div class="empty-state-icon"><i class="ri-bank-card-2-line"></i></div>
+            <div class="empty-state-title">Select an account</div>
+            <p class="text-muted" style="font-size:14px;">Choose an account above to view its transaction history.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/api.js"></script>
+  <script src="js/transactions.js"></script>
+</body>
+</html>

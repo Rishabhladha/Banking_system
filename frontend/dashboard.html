@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NexaBank — Dashboard</title>
+  <meta name="description" content="Your NexaBank dashboard — view balances, accounts and recent activity."/>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css"/>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="app-layout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🏦</div>
+        <span class="logo-text">NexaBank</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">
+          <i class="ri-layout-grid-fill"></i> Dashboard
+        </a>
+        <a href="transfer.html" class="nav-item">
+          <i class="ri-send-plane-fill"></i> Transfer
+        </a>
+        <a href="transactions.html" class="nav-item">
+          <i class="ri-history-line"></i> Transactions
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="user-avatar" id="sidebar-user-avatar">?</div>
+          <div class="user-info">
+            <div class="user-name"  id="sidebar-user-name">Loading…</div>
+            <div class="user-email" id="sidebar-user-email"></div>
+          </div>
+          <i class="ri-logout-circle-r-line logout-btn" id="logout-btn" title="Logout"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="app-main">
+      <header class="app-header">
+        <div>
+          <div class="page-title" style="font-size:20px;margin-bottom:0;">Good day 👋</div>
+          <div class="text-secondary" style="font-size:13px;" id="header-greeting">Loading your accounts…</div>
+        </div>
+        <button class="btn btn-primary btn-sm" id="create-account-btn">
+          <i class="ri-add-line"></i> New Account
+        </button>
+      </header>
+
+      <div class="app-content">
+
+        <!-- Stats row -->
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card glass-card skeleton-card">
+            <div class="skeleton" style="height:14px;width:100px;margin-bottom:12px;"></div>
+            <div class="skeleton" style="height:36px;width:160px;margin-bottom:8px;"></div>
+            <div class="skeleton" style="height:12px;width:80px;"></div>
+          </div>
+          <div class="stat-card glass-card skeleton-card">
+            <div class="skeleton" style="height:14px;width:100px;margin-bottom:12px;"></div>
+            <div class="skeleton" style="height:36px;width:160px;margin-bottom:8px;"></div>
+            <div class="skeleton" style="height:12px;width:80px;"></div>
+          </div>
+          <div class="stat-card glass-card skeleton-card">
+            <div class="skeleton" style="height:14px;width:100px;margin-bottom:12px;"></div>
+            <div class="skeleton" style="height:36px;width:100px;margin-bottom:8px;"></div>
+            <div class="skeleton" style="height:12px;width:80px;"></div>
+          </div>
+        </div>
+
+        <!-- Accounts grid -->
+        <div class="section-row">
+          <h2 class="section-title-sm">My Accounts</h2>
+          <a href="transfer.html" class="btn btn-ghost btn-sm">
+            <i class="ri-send-plane-line"></i> Send Money
+          </a>
+        </div>
+        <div class="accounts-grid" id="accounts-grid">
+          <!-- rendered by JS -->
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <h2 class="section-title-sm" style="margin-bottom:16px;">Quick Actions</h2>
+          <div class="qa-grid">
+            <a href="transfer.html" class="qa-card glass-card">
+              <div class="qa-icon" style="background:rgba(124,58,237,.15);color:var(--purple-light);">
+                <i class="ri-send-plane-fill"></i>
+              </div>
+              <div class="qa-label">Send Money</div>
+            </a>
+            <a href="transactions.html" class="qa-card glass-card">
+              <div class="qa-icon" style="background:rgba(16,185,129,.12);color:var(--green);">
+                <i class="ri-history-fill"></i>
+              </div>
+              <div class="qa-label">View History</div>
+            </a>
+            <div class="qa-card glass-card" id="qa-create-account" style="cursor:pointer;">
+              <div class="qa-icon" style="background:rgba(245,158,11,.12);color:var(--gold);">
+                <i class="ri-bank-card-fill"></i>
+              </div>
+              <div class="qa-label">New Account</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.app-content -->
+    </main>
+  </div>
+
+  <!-- Create Account Modal -->
+  <div class="modal-overlay" id="modal-create" style="display:none;">
+    <div class="modal glass-card">
+      <div class="modal-header">
+        <h3 class="modal-title"><i class="ri-bank-card-fill text-gold"></i> Create New Account</h3>
+        <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-create')">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+      <p class="modal-body-text">
+        A new INR bank account will be created and linked to your profile.
+        You can then fund it and start making transfers immediately.
+      </p>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('modal-create')">Cancel</button>
+        <button class="btn btn-primary" id="confirm-create-btn">
+          <span class="btn-label"><i class="ri-add-circle-line"></i> Create Account</span>
+          <span class="btn-loading" style="display:none;"><span class="spinner"></span> Creating…</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

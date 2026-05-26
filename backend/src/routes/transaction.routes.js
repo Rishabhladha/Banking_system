@@ -8,7 +8,6 @@ const transactionRoutes = Router();
  * - POST /api/transactions/
  * - Create a new transaction
  */
-
 transactionRoutes.post("/", authMiddleware.authMiddleware, transactionController.createTransaction)
 
 
@@ -17,5 +16,11 @@ transactionRoutes.post("/", authMiddleware.authMiddleware, transactionController
  * - Create initial funds transaction from system user
  */
 transactionRoutes.post("/system/initial-funds", authMiddleware.authSystemUserMiddleware, transactionController.createInitialFundsTransaction)
+
+/**
+ * - GET /api/transactions/:accountId
+ * - Get transaction history for a specific account (authenticated user must own it)
+ */
+transactionRoutes.get("/:accountId", authMiddleware.authMiddleware, transactionController.getTransactionHistory)
 
 module.exports = transactionRoutes;

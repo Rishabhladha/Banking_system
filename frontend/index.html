@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NexaBank — The Future of Banking</title>
+  <meta name="description" content="NexaBank — A secure, real-time digital banking platform with instant transfers, double-entry ledger accounting, and enterprise-grade security."/>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/landing.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css"/>
+</head>
+<body>
+
+  <!-- Ambient orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">🏦</div>
+        <span class="nav-logo-text">NexaBank</span>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#how" class="nav-link">How It Works</a>
+        <a href="#security" class="nav-link">Security</a>
+      </div>
+      <div class="nav-actions">
+        <a href="auth.html" class="btn btn-outline btn-sm">Sign In</a>
+        <a href="auth.html#register" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Enterprise-Grade Banking Platform
+      </div>
+      <h1 class="hero-title">
+        Banking Built for the
+        <span class="gradient-text">Digital Age</span>
+      </h1>
+      <p class="hero-subtitle">
+        Experience real-time transfers, double-entry ledger accounting,
+        and bank-level security — all in one elegantly designed platform.
+      </p>
+      <div class="hero-cta">
+        <a href="auth.html#register" class="btn btn-primary btn-lg" id="hero-cta-btn">
+          <i class="ri-rocket-line"></i>
+          Open Free Account
+        </a>
+        <a href="auth.html" class="btn btn-outline btn-lg">
+          <i class="ri-login-circle-line"></i>
+          Sign In
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">ACID</span>
+          <span class="hero-stat-label">Transactions</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">JWT</span>
+          <span class="hero-stat-label">Auth + Blacklist</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">Real-time</span>
+          <span class="hero-stat-label">Notifications</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero visual -->
+    <div class="hero-visual">
+      <div class="hero-card hero-card-main glass-card">
+        <div class="hc-header">
+          <div class="hc-header-left">
+            <div class="hc-avatar">R</div>
+            <div>
+              <div class="hc-name">Rishabh Ladha</div>
+              <div class="hc-account-num">•••• •••• •••• 4827</div>
+            </div>
+          </div>
+          <div class="chip-icon">💳</div>
+        </div>
+        <div class="hc-balance">
+          <div class="hc-balance-label">Total Balance</div>
+          <div class="hc-balance-value">₹2,47,850.00</div>
+        </div>
+        <div class="hc-footer">
+          <div>
+            <div class="hc-footer-label">Monthly Income</div>
+            <div class="hc-footer-value text-green">+₹85,000</div>
+          </div>
+          <div>
+            <div class="hc-footer-label">Monthly Spend</div>
+            <div class="hc-footer-value text-red">-₹32,400</div>
+          </div>
+        </div>
+        <!-- Glow ring -->
+        <div class="card-glow"></div>
+      </div>
+
+      <!-- Floating transaction pills -->
+      <div class="float-pill pill-1 glass-card">
+        <div class="pill-icon text-green"><i class="ri-arrow-down-line"></i></div>
+        <div>
+          <div class="pill-title">Received</div>
+          <div class="pill-amount text-green">+₹15,000</div>
+        </div>
+      </div>
+      <div class="float-pill pill-2 glass-card">
+        <div class="pill-icon text-red"><i class="ri-arrow-up-line"></i></div>
+        <div>
+          <div class="pill-title">Sent</div>
+          <div class="pill-amount text-red">-₹4,200</div>
+        </div>
+      </div>
+      <div class="float-pill pill-3 glass-card">
+        <i class="ri-shield-check-fill text-green" style="font-size:16px;"></i>
+        <span style="font-size:13px;font-weight:600;">Secured</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <div class="section-tag">Core Features</div>
+      <h2 class="section-title">Built for Production, <br/>Designed for People</h2>
+      <p class="section-subtitle">Every feature is engineered to industry standard, from the database layer up.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card glass-card">
+        <div class="feature-icon" style="background:rgba(124,58,237,.15);color:var(--purple-light);">
+          <i class="ri-exchange-funds-fill"></i>
+        </div>
+        <h3 class="feature-title">Double-Entry Ledger</h3>
+        <p class="feature-desc">
+          Every transaction creates both a DEBIT and CREDIT ledger entry.
+          Balance is computed from aggregation — no stale data ever.
+        </p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon" style="background:rgba(245,158,11,.12);color:var(--gold);">
+          <i class="ri-lock-password-fill"></i>
+        </div>
+        <h3 class="feature-title">ACID Transactions</h3>
+        <p class="feature-desc">
+          MongoDB multi-document sessions ensure your money transfers are
+          atomic — either everything succeeds or everything rolls back.
+        </p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon" style="background:rgba(16,185,129,.12);color:var(--green);">
+          <i class="ri-key-2-fill"></i>
+        </div>
+        <h3 class="feature-title">Idempotent Transfers</h3>
+        <p class="feature-desc">
+          Every transfer carries a unique idempotency key — retrying a
+          failed transfer never charges you twice. Zero duplicate risk.
+        </p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon" style="background:rgba(6,182,212,.12);color:var(--cyan);">
+          <i class="ri-shield-keyhole-fill"></i>
+        </div>
+        <h3 class="feature-title">JWT + Token Blacklist</h3>
+        <p class="feature-desc">
+          Secure JWT authentication with a TTL-indexed blacklist ensures
+          logged-out tokens are always revoked. CSRF and XSS protected cookies.
+        </p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon" style="background:rgba(124,58,237,.15);color:var(--purple-light);">
+          <i class="ri-mail-send-fill"></i>
+        </div>
+        <h3 class="feature-title">Email Notifications</h3>
+        <p class="feature-desc">
+          Instant email alerts on registration and every transaction via
+          OAuth2-secured Gmail — fully async, never blocking your response.
+        </p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon" style="background:rgba(245,158,11,.12);color:var(--gold);">
+          <i class="ri-user-settings-fill"></i>
+        </div>
+        <h3 class="feature-title">Role-Based Access</h3>
+        <p class="feature-desc">
+          System users have elevated privileges to fund accounts.
+          Regular users can only access their own accounts — proper RBAC.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-section" id="how">
+    <div class="section-header">
+      <div class="section-tag">Process</div>
+      <h2 class="section-title">Transfer Money in Seconds</h2>
+      <p class="section-subtitle">Our 4-step process is fast, secure, and fully auditable.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon"><i class="ri-user-add-fill"></i></div>
+        <h3 class="step-title">Create Account</h3>
+        <p class="step-desc">Sign up in seconds. Your banking account is created instantly with a unique ID.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon"><i class="ri-bank-fill"></i></div>
+        <h3 class="step-title">Fund Your Account</h3>
+        <p class="step-desc">Initial funds are credited via a system-level transaction — fully recorded in the ledger.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon"><i class="ri-send-plane-fill"></i></div>
+        <h3 class="step-title">Transfer Instantly</h3>
+        <p class="step-desc">Send to any account ID. DEBIT and CREDIT ledger entries are created atomically.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-icon"><i class="ri-history-fill"></i></div>
+        <h3 class="step-title">Track Everything</h3>
+        <p class="step-desc">Every transaction is permanently recorded. Your balance is always accurate, always live.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECURITY ===== -->
+  <section class="security-section" id="security">
+    <div class="security-inner glass-card">
+      <div class="security-left">
+        <div class="section-tag">Security</div>
+        <h2 class="section-title" style="margin-bottom:16px;">Your Money is Protected <br/><span class="gradient-text">at Every Layer</span></h2>
+        <p class="section-subtitle" style="margin-bottom:28px;">Bank-grade security isn't optional. Every endpoint is protected, every token is verified.</p>
+        <div class="security-list">
+          <div class="sec-item"><i class="ri-checkbox-circle-fill text-green"></i> httpOnly + Secure + SameSite cookies</div>
+          <div class="sec-item"><i class="ri-checkbox-circle-fill text-green"></i> Password hashed with bcrypt (10 rounds)</div>
+          <div class="sec-item"><i class="ri-checkbox-circle-fill text-green"></i> JWT token blacklist with auto-expiry</div>
+          <div class="sec-item"><i class="ri-checkbox-circle-fill text-green"></i> Immutable ledger — no record can be deleted</div>
+          <div class="sec-item"><i class="ri-checkbox-circle-fill text-green"></i> MongoDB ACID sessions — no partial transfers</div>
+          <div class="sec-item"><i class="ri-checkbox-circle-fill text-green"></i> CORS locked to frontend origin</div>
+        </div>
+      </div>
+      <div class="security-right">
+        <div class="sec-graphic">
+          <div class="sec-shield">
+            <i class="ri-shield-check-fill" style="font-size:64px;color:var(--green);"></i>
+            <div class="sec-shield-glow"></div>
+          </div>
+          <div class="sec-ring sec-ring-1"></div>
+          <div class="sec-ring sec-ring-2"></div>
+          <div class="sec-ring sec-ring-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to Experience <span class="gradient-text">Modern Banking?</span></h2>
+    <p class="cta-subtitle">Join today. Zero fees. Full control over your money.</p>
+    <a href="auth.html#register" class="btn btn-gold btn-lg">
+      <i class="ri-rocket-line"></i>
+      Create Your Account — Free
+    </a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="nav-logo-icon" style="width:32px;height:32px;font-size:16px;">🏦</div>
+        <span class="nav-logo-text" style="font-size:18px;">NexaBank</span>
+      </div>
+      <p class="footer-copy">© 2025 NexaBank. Built with ❤️ for the placement interview.</p>
+      <div class="footer-links">
+        <a href="auth.html">Login</a>
+        <a href="auth.html#register">Register</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const el = document.querySelector(a.getAttribute('href'));
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Intersection observer for fade-in animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.feature-card,.step-card,.hero-stat').forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

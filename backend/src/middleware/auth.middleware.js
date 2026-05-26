@@ -3,79 +3,65 @@ const jwt = require("jsonwebtoken")
 const tokenBlackListModel = require("../models/blackList.model")
 
 
-
-async function authMiddleware(req, res, next) {
-
+/**
+ * Shared helper: extract token from cookie or Authorization header,
+ * check blacklist, and verify JWT signature.
+ * Returns { token, decoded } on success, or sends the error response directly and returns null.
+ */
+async function extractAndValidateToken(req, res) {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[ 1 ]
 
     if (!token) {
-        return res.status(401).json({
-            message: "Unauthorized access, token is missing"
-        })
+        res.status(401).json({ message: "Unauthorized access, token is missing" })
+        return null
     }
 
     const isBlacklisted = await tokenBlackListModel.findOne({ token })
 
     if (isBlacklisted) {
-        return res.status(401).json({
-            message: "Unauthorized access, token is invalid"
-        })
+        res.status(401).json({ message: "Unauthorized access, token is invalid" })
+        return null
     }
 
     try {
-
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-        const user = await userModel.findById(decoded.userId)
-
-        req.user = user
-
-        return next()
-
+        return { token, decoded }
     } catch (err) {
-        return res.status(401).json({
-            message: "Unauthorized access, token is invalid"
-        })
+        res.status(401).json({ message: "Unauthorized access, token is invalid" })
+        return null
     }
 }
+
+
+/**
+ * Standard auth middleware — verifies any authenticated user
+ */
+async function authMiddleware(req, res, next) {
+    const result = await extractAndValidateToken(req, res)
+    if (!result) return  // response already sent
+
+    const user = await userModel.findById(result.decoded.userId)
+    req.user = user
+
+    return next()
+}
+
+/**
+ * System user auth middleware — verifies the user has systemUser: true (RBAC)
+ */
 async function authSystemUserMiddleware(req, res, next) {
+    const result = await extractAndValidateToken(req, res)
+    if (!result) return  // response already sent
 
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[ 1 ]
+    const user = await userModel.findById(result.decoded.userId).select("+systemUser")
 
-    if (!token) {
-        return res.status(401).json({
-            message: "Unauthorized access, token is missing"
-        })
+    if (!user.systemUser) {
+        return res.status(403).json({ message: "Forbidden access, not a system user" })
     }
 
-    const isBlacklisted = await tokenBlackListModel.findOne({ token })
+    req.user = user
 
-    if (isBlacklisted) {
-        return res.status(401).json({
-            message: "Unauthorized access, token is invalid"
-        })
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-        const user = await userModel.findById(decoded.userId).select("+systemUser")
-        if (!user.systemUser) {
-            return res.status(403).json({
-                message: "Forbidden access, not a system user"
-            })
-        }
-
-        req.user = user
-
-        return next()
-    }
-    catch (err) {
-        return res.status(401).json({
-            message: "Unauthorized access, token is invalid"
-        })
-    }
-
+    return next()
 }
 
 module.exports = {

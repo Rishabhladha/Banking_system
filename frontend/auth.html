@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NexaBank — Sign In / Create Account</title>
+  <meta name="description" content="Sign in or register for your NexaBank account."/>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/auth.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css"/>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="auth-page">
+
+    <!-- Left branding panel -->
+    <div class="auth-brand">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-logo-icon">🏦</div>
+        <span class="brand-logo-text">NexaBank</span>
+      </a>
+      <div class="brand-body">
+        <h2 class="brand-headline">Secure Banking, <span class="gradient-text">Simplified.</span></h2>
+        <p class="brand-sub">A full-stack banking platform with ACID transactions, double-entry ledger, and enterprise-grade security.</p>
+        <div class="brand-features">
+          <div class="brand-feat"><i class="ri-shield-check-fill text-green"></i><span>JWT Auth + Token Blacklist</span></div>
+          <div class="brand-feat"><i class="ri-exchange-funds-fill text-purple"></i><span>Double-Entry Ledger System</span></div>
+          <div class="brand-feat"><i class="ri-lock-fill text-gold"></i><span>bcrypt + Secure Cookies</span></div>
+          <div class="brand-feat"><i class="ri-database-2-fill" style="color:var(--cyan)"></i><span>MongoDB ACID Sessions</span></div>
+        </div>
+      </div>
+      <!-- Decorative card -->
+      <div class="brand-card glass-card">
+        <div class="brand-card-top">
+          <div class="bc-dot bc-dot-1"></div>
+          <div class="bc-dot bc-dot-2"></div>
+          <div class="bc-dot bc-dot-3"></div>
+        </div>
+        <div class="bc-balance-label">Available Balance</div>
+        <div class="bc-balance">₹2,47,850.00</div>
+        <div class="bc-footer">
+          <span class="badge badge-active">● ACTIVE</span>
+          <span class="bc-id">ACC-4827</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-form-panel">
+      <div class="auth-card glass-card">
+
+        <!-- Tab switcher -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">
+            <i class="ri-login-circle-line"></i> Sign In
+          </button>
+          <button class="auth-tab" id="tab-register" onclick="switchTab('register')">
+            <i class="ri-user-add-line"></i> Register
+          </button>
+        </div>
+
+        <!-- ===== LOGIN FORM ===== -->
+        <div class="auth-form-body" id="form-login">
+          <div class="form-welcome">
+            <h1 class="form-title">Welcome back</h1>
+            <p class="form-subtitle">Sign in to your NexaBank account</p>
+          </div>
+
+          <form id="login-form" novalidate>
+            <div class="form-stack">
+              <div class="form-group">
+                <label class="form-label" for="login-email">Email Address</label>
+                <div class="input-wrapper">
+                  <i class="ri-mail-line input-icon"></i>
+                  <input type="email" id="login-email" class="form-input input-with-icon"
+                    placeholder="you@example.com" autocomplete="email" required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="login-password">
+                  Password
+                </label>
+                <div class="input-wrapper">
+                  <i class="ri-lock-line input-icon"></i>
+                  <input type="password" id="login-password" class="form-input input-with-icon"
+                    placeholder="Enter your password" autocomplete="current-password" required/>
+                  <button type="button" class="toggle-pw" onclick="togglePw('login-password', this)" tabindex="-1">
+                    <i class="ri-eye-off-line"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="login-error" class="form-error" style="display:none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="login-btn">
+              <span class="btn-label"><i class="ri-login-circle-line"></i> Sign In</span>
+              <span class="btn-loading" style="display:none;"><span class="spinner"></span> Signing in…</span>
+            </button>
+          </form>
+
+          <p class="auth-switch">
+            Don't have an account?
+            <a href="#" onclick="switchTab('register');return false;" class="auth-switch-link">Create one free</a>
+          </p>
+        </div>
+
+        <!-- ===== REGISTER FORM ===== -->
+        <div class="auth-form-body" id="form-register" style="display:none;">
+          <div class="form-welcome">
+            <h1 class="form-title">Create account</h1>
+            <p class="form-subtitle">Join NexaBank — free forever</p>
+          </div>
+
+          <form id="register-form" novalidate>
+            <div class="form-stack">
+              <div class="form-group">
+                <label class="form-label" for="reg-name">Full Name</label>
+                <div class="input-wrapper">
+                  <i class="ri-user-3-line input-icon"></i>
+                  <input type="text" id="reg-name" class="form-input input-with-icon"
+                    placeholder="Rishabh Ladha" autocomplete="name" required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-email">Email Address</label>
+                <div class="input-wrapper">
+                  <i class="ri-mail-line input-icon"></i>
+                  <input type="email" id="reg-email" class="form-input input-with-icon"
+                    placeholder="you@example.com" autocomplete="email" required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="reg-password">Password <span class="text-muted">(min 6 chars)</span></label>
+                <div class="input-wrapper">
+                  <i class="ri-lock-line input-icon"></i>
+                  <input type="password" id="reg-password" class="form-input input-with-icon"
+                    placeholder="Choose a strong password" autocomplete="new-password" required minlength="6"/>
+                  <button type="button" class="toggle-pw" onclick="togglePw('reg-password', this)" tabindex="-1">
+                    <i class="ri-eye-off-line"></i>
+                  </button>
+                </div>
+                <!-- Password strength -->
+                <div class="pw-strength" id="pw-strength" style="display:none;">
+                  <div class="pw-strength-bar"><div class="pw-strength-fill" id="pw-fill"></div></div>
+                  <span class="pw-strength-label" id="pw-label"></span>
+                </div>
+              </div>
+            </div>
+
+            <div id="reg-error" class="form-error" style="display:none;"></div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="reg-btn">
+              <span class="btn-label"><i class="ri-user-add-line"></i> Create Account</span>
+              <span class="btn-loading" style="display:none;"><span class="spinner"></span> Creating account…</span>
+            </button>
+          </form>
+
+          <p class="auth-switch">
+            Already have an account?
+            <a href="#" onclick="switchTab('login');return false;" class="auth-switch-link">Sign in</a>
+          </p>
+        </div>
+
+      </div><!-- /.auth-card -->
+    </div><!-- /.auth-form-panel -->
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
