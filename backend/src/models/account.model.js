@@ -1,6 +1,11 @@
 const mongoose = require("mongoose")
 const ledgerModel = require("./ledger.model")
 
+// Generate a random 12-digit account number
+function generateAccountNumber() {
+    return String(Math.floor(100000000000 + Math.random() * 900000000000))
+}
+
 const accountSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +25,21 @@ const accountSchema = new mongoose.Schema({
         type: String,
         required: [ true, "Currency is required for creating an account" ],
         default: "INR"
+    },
+    accountType: {
+        type: String,
+        enum: { values: [ "SAVINGS", "CURRENT" ], message: "Account type must be SAVINGS or CURRENT" },
+        default: "SAVINGS"
+    },
+    accountNumber: {
+        type: String,
+        unique: true,
+        default: generateAccountNumber
+    },
+    nickname: {
+        type: String,
+        default: null,
+        trim: true
     }
 }, {
     timestamps: true
@@ -27,9 +47,9 @@ const accountSchema = new mongoose.Schema({
 
 accountSchema.index({ user: 1, status: 1 })
 
-accountSchema.methods.getBalance = async function () {
+accountSchema.methods.getBalance = async function (session = null) {
 
-    const balanceData = await ledgerModel.aggregate([
+    const aggregateQuery = ledgerModel.aggregate([
         { $match: { account: this._id } },
         {
             $group: {
@@ -60,7 +80,13 @@ accountSchema.methods.getBalance = async function () {
                 balance: { $subtract: [ "$totalCredit", "$totalDebit" ] }
             }
         }
-    ])
+    ]);
+
+    if (session) {
+        aggregateQuery.session(session);
+    }
+
+    const balanceData = await aggregateQuery;
 
     if (balanceData.length === 0) {
         return 0

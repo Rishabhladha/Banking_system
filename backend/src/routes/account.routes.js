@@ -1,39 +1,57 @@
 const express = require("express")
-const authMiddleware = require("../middleware/auth.middleware")
+const { authMiddleware } = require("../middleware/auth.middleware")
 const accountController = require("../controllers/account.controller")
 
 
 const router = express.Router()
 
 
-
 /**
- * - POST /api/accounts/
- * - Create a new account
- * - Protected Route
+ * POST /api/accounts/
+ * Create a new account
  */
-router.post("/", authMiddleware.authMiddleware, accountController.createAccountController)
+router.post("/", authMiddleware, accountController.createAccountController)
 
 
 /**
- * - GET /api/accounts/
- * - Get all accounts of the logged-in user
- * - Protected Route
+ * GET /api/accounts/
+ * Get all accounts of the logged-in user
  */
-router.get("/", authMiddleware.authMiddleware, accountController.getUserAccountsController)
+router.get("/", authMiddleware, accountController.getUserAccountsController)
 
 
 /**
- * - GET /api/accounts/balance/:accountId
+ * GET /api/accounts/balance/:accountId
+ * Get balance for a specific account
  */
-router.get("/balance/:accountId", authMiddleware.authMiddleware, accountController.getAccountBalanceController)
+router.get("/balance/:accountId", authMiddleware, accountController.getAccountBalanceController)
+
 
 /**
- * - POST /api/accounts/deposit
- * - Deposit funds into the user's own account (external credit)
- * - Protected Route
+ * NOTE: POST /api/accounts/deposit — REMOVED
+ * Direct user deposits are no longer allowed.
+ * Users must submit a deposit request via POST /api/deposit-requests
+ * which must be approved by an admin before funds are credited.
  */
-router.post("/deposit", authMiddleware.authMiddleware, accountController.depositController)
+
+
+/**
+ * POST /api/accounts/withdraw
+ * Withdraw funds from the user's own account (ATM-style debit)
+ */
+router.post("/withdraw", authMiddleware, accountController.withdrawController)
+
+/**
+ * GET /api/accounts/statement/:accountId
+ * Get filtered ledger statement for an account
+ */
+router.get("/statement/:accountId", authMiddleware, accountController.getStatementController)
+
+/**
+ * PATCH /api/accounts/:accountId/nickname
+ * Update account nickname
+ */
+router.patch("/:accountId/nickname", authMiddleware, accountController.updateAccountNicknameController)
 
 
 

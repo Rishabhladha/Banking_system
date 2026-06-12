@@ -81,18 +81,7 @@ async function createTransaction(req, res, next) {
         }
 
         /**
-         * 4. Derive sender balance from ledger
-         */
-        const balance = await fromUserAccount.getBalance()
-
-        if (balance < amount) {
-            return res.status(400).json({
-                message: `Insufficient balance. Current balance is ${balance}. Requested amount is ${amount}`
-            })
-        }
-
-        /**
-         * 5–9. Run the atomic ledger transaction
+         * 4 & 5–9. Run the atomic ledger transaction
          * FIX: session is declared BEFORE try so catch block can always call abortTransaction()
          */
         let transaction
@@ -100,6 +89,23 @@ async function createTransaction(req, res, next) {
 
         try {
             session.startTransaction()
+
+            // ATOMIC WRITE LOCK: Lock the sender's account to prevent concurrent double-spending
+            const lockedFromAccount = await accountModel.findOneAndUpdate(
+                { _id: fromAccount, status: "ACTIVE" },
+                { $set: { updatedAt: new Date() } },
+                { session, new: true }
+            )
+
+            if (!lockedFromAccount) {
+                throw new Error("Sender account not found or inactive")
+            }
+
+            const balance = await lockedFromAccount.getBalance(session)
+
+            if (balance < amount) {
+                throw new Error(`Insufficient balance. Current balance is ${balance}. Requested amount is ${amount}`)
+            }
 
             /**
              * 5. Create transaction (PENDING)
@@ -119,7 +125,9 @@ async function createTransaction(req, res, next) {
                 account: fromAccount,
                 amount: amount,
                 transaction: transaction._id,
-                type: "DEBIT"
+                type: "DEBIT",
+                entryType: "TRANSFER",
+                description: `Transfer to account ${toUserAccount.accountNumber?.slice(-4) || toAccount}`
             } ], { session })
 
             // NOTE: Removed the artificial 15-second delay that was here.
@@ -132,7 +140,9 @@ async function createTransaction(req, res, next) {
                 account: toAccount,
                 amount: amount,
                 transaction: transaction._id,
-                type: "CREDIT"
+                type: "CREDIT",
+                entryType: "TRANSFER",
+                description: `Transfer from account ${fromUserAccount.accountNumber?.slice(-4) || fromAccount}`
             } ], { session })
 
             /**
@@ -154,7 +164,7 @@ async function createTransaction(req, res, next) {
             await session.abortTransaction()
             console.error("[Transaction] Aborted due to error:", txError.message)
             return res.status(500).json({
-                message: "Transaction failed and was rolled back. Please retry.",
+                message: txError.message || "Transaction failed and was rolled back. Please retry.",
             })
         } finally {
             session.endSession()

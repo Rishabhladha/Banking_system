@@ -1,21 +1,21 @@
-const express = require("express")
-const authController = require("../controllers/auth.controller")
+const authRouter = require("express").Router()
 
-const router = express.Router()
+const {
+    userRegisterController,
+    userLoginController,
+    userLogoutController,
+    getMeController,
+    verifyAdminPinController
+} = require("../controllers/auth.controller")
 
+const { authMiddleware, adminMiddleware } = require("../middleware/auth.middleware")
 
-/* POST /api/auth/register */
-router.post("/register", authController.userRegisterController)
+authRouter.post("/register", userRegisterController)
+authRouter.post("/login", userLoginController)
+authRouter.post("/logout", userLogoutController)
+authRouter.get("/me", authMiddleware, getMeController)
 
+// Admin PIN session verification (must be logged in as admin/staff)
+authRouter.post("/admin-pin", adminMiddleware, verifyAdminPinController)
 
-/* POST /api/auth/login */
-router.post("/login",authController.userLoginController)
-
-/**
- * - POST /api/auth/logout
- */
-router.post("/logout", authController.userLogoutController)
-
-
-
-module.exports = router
+module.exports = authRouter

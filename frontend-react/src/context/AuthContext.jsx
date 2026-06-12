@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
     const [token, setToken] = useState(() => localStorage.getItem('nexabank_token'));
 
     const isLoggedIn = !!token;
+    const isAdmin = user?.role === 'admin' || user?.role === 'staff';
 
     const login = useCallback((userData, tokenValue) => {
         localStorage.setItem('nexabank_token', tokenValue);
@@ -34,8 +35,14 @@ export function AuthProvider({ children }) {
         navigate('/auth');
     }, [navigate]);
 
+    const updateUser = useCallback((updatedData) => {
+        const updated = { ...user, ...updatedData };
+        localStorage.setItem('nexabank_user', JSON.stringify(updated));
+        setUser(updated);
+    }, [user]);
+
     return (
-        <AuthContext.Provider value={{ user, token, isLoggedIn, login, logout }}>
+        <AuthContext.Provider value={{ user, token, isLoggedIn, isAdmin, login, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );

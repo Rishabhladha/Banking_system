@@ -64,7 +64,29 @@ async function authSystemUserMiddleware(req, res, next) {
     return next()
 }
 
+/**
+ * Admin middleware — verifies the user has role admin or staff
+ */
+async function adminMiddleware(req, res, next) {
+    const result = await extractAndValidateToken(req, res)
+    if (!result) return
+
+    const user = await userModel.findById(result.decoded.userId)
+
+    if (!user) {
+        return res.status(401).json({ message: "User not found" })
+    }
+
+    if (user.role !== "admin" && user.role !== "staff") {
+        return res.status(403).json({ message: "Forbidden: Admin or staff access required" })
+    }
+
+    req.user = user
+    return next()
+}
+
 module.exports = {
     authMiddleware,
-    authSystemUserMiddleware
+    authSystemUserMiddleware,
+    adminMiddleware
 }
